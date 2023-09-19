@@ -15,6 +15,13 @@ const getMyLoans = async (query) => {
   const result = loanCollection.find(query).toArray();
   return result;
 };
+// get all  for admin dashboard
+const getAllLons = async () => {
+  const client = await connectToMongoDB();
+  const loanCollection = client.db("easy-loan").collection("loans");
+  const result = loanCollection.find().toArray();
+  return result;
+};
 // get a user scheduel loan
 const loanScheduled = async (query) => {
   const client = await connectToMongoDB();
@@ -33,9 +40,20 @@ const repayment = async (query ,updateDoc) => {
   return result;
 };
 
+
+const updateStatus = async (query ,updateDoc) => {
+  console.log({naem: updateDoc});
+  const client = await connectToMongoDB();
+  const loanCollection = client.db("easy-loan").collection("loans");
+  const result = await loanCollection.updateOne(query ,updateDoc);
+  return result;
+};
+
 module.exports = {
   createLoan,
   getMyLoans,
   loanScheduled,
-  repayment
+  repayment,
+  getAllLons,
+  updateStatus
 };

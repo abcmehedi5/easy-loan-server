@@ -9,4 +9,18 @@ router.post("/user", async (req, res) => {
   res.status(200).send({ message: "User Create Successfull" });
 });
 
-module.exports= router;
+// check admin by user
+
+router.get("/admin", async (req, res) => {
+  try {
+    const email = req.query.email;
+    const query = { email: email };
+    const user = await userController.adminCheck(query);
+    const isAdmin = { admin: user?.role == "admin" };
+    res.send(isAdmin);
+  } catch (error) {
+    res.status(500).send({ error: "there was a server side error", error });
+  }
+});
+
+module.exports = router;

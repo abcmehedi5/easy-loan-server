@@ -18,6 +18,12 @@ router.get("/loan", async (req, res) => {
   res.status(200).send(result);
 });
 
+// get all loan for admin dashboard
+router.get("/loan-all", async (req, res) => {
+  const result = await loanRequestController.getAllLons();
+  res.status(200).send(result);
+});
+
 // single loan get
 
 router.get("/loan-scheduled/:id", async (req, res) => {
@@ -46,4 +52,20 @@ router.patch("/repayment/:id", async (req, res) => {
   await loanRequestController.repayment(query, updateDoc);
   res.status(200).send({ message: "Payment Successfull" });
 });
+
+// handle status update
+router.put("/loans-status/:id", async (req, res) => {
+  const status = req.body.status;
+  console.log(status);  
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const updateDoc = {
+    $set: {
+      status: status,
+    },
+  };
+  await loanRequestController.updateStatus(query, updateDoc);
+  res.status(200).send({ message: "Status update successfull" });
+});
+
 module.exports = router;
