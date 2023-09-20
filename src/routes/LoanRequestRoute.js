@@ -39,10 +39,13 @@ router.get("/loan-scheduled/:id", async (req, res) => {
 
 router.patch("/repayment/:id", async (req, res) => {
   const amount = req.body.loanAmount;
-  console.log(amount);
   const id = req.params.id;
-  console.log(amount, id);
   const query = { _id: new ObjectId(id) };
+
+  if (amount < 0) {
+    return res.status(500).send({ message: " your loan is full paid" });
+  }
+
   const updateDoc = {
     $inc: {
       loanAmount: -amount,
@@ -56,7 +59,7 @@ router.patch("/repayment/:id", async (req, res) => {
 // handle status update
 router.put("/loans-status/:id", async (req, res) => {
   const status = req.body.status;
-  console.log(status);  
+  console.log(status);
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const updateDoc = {
