@@ -33,7 +33,6 @@ const loanScheduled = async (query) => {
 // repayment
 
 const repayment = async (query ,updateDoc) => {
-  console.log({naem: updateDoc});
   const client = await connectToMongoDB();
   const loanCollection = client.db("easy-loan").collection("loans");
   const result = await loanCollection.updateOne(query ,updateDoc);
@@ -42,7 +41,6 @@ const repayment = async (query ,updateDoc) => {
 
 
 const updateStatus = async (query ,updateDoc) => {
-  console.log({naem: updateDoc});
   const client = await connectToMongoDB();
   const loanCollection = client.db("easy-loan").collection("loans");
   const result = await loanCollection.updateOne(query ,updateDoc);

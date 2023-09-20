@@ -59,7 +59,6 @@ router.patch("/repayment/:id", async (req, res) => {
 // handle status update
 router.put("/loans-status/:id", async (req, res) => {
   const status = req.body.status;
-  console.log(status);
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const updateDoc = {
